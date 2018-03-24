@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateUsuarioTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,7 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('cpf', 11)->unique();
             $table->string('ativo');
             $table->string('nivel');
-            $table->string('nome');
             $table->string('email', 60)->unique();
             $table->string('senha');
             $table->string('status');

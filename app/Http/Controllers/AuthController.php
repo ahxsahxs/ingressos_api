@@ -8,7 +8,7 @@ use App\Http\Requests\AuthenticateRequest;
 use JWTAuth;
 use Hash;
 use Validator;
-use App\Company;
+use App\Usuario;
 
 class AuthController extends Controller
 {
@@ -17,7 +17,7 @@ class AuthController extends Controller
 
         $validator = Validator::make($credentials, [
             'password' => 'required',
-            'email' => 'required|email|'
+            'email' => 'required|email'
         ]);
 
         if($validator->fails()) {
@@ -27,21 +27,21 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $company = Company::where(['email'=> $credentials['email']])->first();
+        $usuario = Usuario::where(['email'=> $credentials['email']])->first();
 
-        if(!$company) {
+        if(!$usuario) {
             return response()->json([
                 'message' => 'Invalid Credentials'
             ], 401);
         }
 
-        if(!Hash::check($credentials['password'], $company->password)) {
+        if(!Hash::check($credentials['password'], $usuario->password)) {
             return response()->json([
                 'message' => 'Invalid Credentials'
             ], 401);
         }
 
-        $token = JWTAuth::fromUser($company);
+        $token = JWTAuth::fromUser($usuario);
 
         $objToken = JWTAuth::setToken($token);
         $expiration = JWTAuth::decode($objToken->getToken()->get('exp'));
