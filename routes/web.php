@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return redirect('api');
+    return view('home.index');
 });
