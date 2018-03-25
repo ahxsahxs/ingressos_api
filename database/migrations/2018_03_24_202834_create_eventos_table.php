@@ -29,8 +29,18 @@ class CreateEventosTable extends Migration
             $table->longText('descricao');
             $table->boolean('ativo')->default(TRUE);
             $table->boolean('exibir_valor')->default(TRUE);
+            $table->unsignedInteger('usuario_inclusao_id');
+            $table->unsignedInteger('usuario_responsavel_id');
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('usuario_inclusao_id')
+                ->references('id')->on('usuario')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+            $table->foreign('usuario_responsavel_id')
+                ->references('id')->on('usuario')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
     }
 
