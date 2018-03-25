@@ -16,4 +16,8 @@ class Ambiente extends Model
     public function evento() {
         return $this->belongsTo('App\Evento');
     }
+
+    public function lotes() {
+        return $this->hasMany('App\Lote');
+    }
 }

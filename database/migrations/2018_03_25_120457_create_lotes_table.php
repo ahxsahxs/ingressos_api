@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsuarioTable extends Migration
+class CreateLotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('lotes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('cpf', 11)->unique();
-            $table->string('ativo');
-            $table->integer('nivel');
-            $table->string('email', 60)->unique();
-            $table->string('senha');
-            $table->string('status');
-            $table->rememberToken();
+            $table->unsignedInteger('quantidade');
+            $table->unsignedInteger('ordem');
+            $table->boolean('status');
+            $table->decimal('valor');
+            $table->unsignedInteger('ambiente_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -34,6 +33,6 @@ class CreateUsuarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario');
+        Schema::dropIfExists('lotes');
     }
 }

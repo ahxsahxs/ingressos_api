@@ -26,4 +26,16 @@ class Usuario extends Model implements AuthenticatableContract, CanResetPassword
     public function eventos_responsavel() {
         return $this->hasMany('App\Evento', 'usuario_responsavel_id');
     }
+
+    public function pedidos() {
+        return $this->hasMany('App\Pedido');
+    }
+
+    public function ingressosLidos() {
+        return $this->hasMany('App\Ingresso', 'leitor_id');
+    }
+
+    public function pdvs() {
+        return $this->hasOne('App\Pdv');
+    }
 }
