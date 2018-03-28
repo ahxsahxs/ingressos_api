@@ -19,8 +19,14 @@ Route::get('/', function() {
 
 Route::post('auth/login', 'AuthController@autenticate');
 
-Route::resource('jobs', 'JobsController');
-Route::resource('companies', 'CompaniesController');
+Route::resource('eventos', 'EventoController');
+Route::resource('grupoambiente', 'GrupoAmbienteController');
+Route::resource('ambientes', 'AmbienteController');
+Route::resource('lotes', 'LoteController');
+Route::resource('pdvs', 'PdvController');
+Route::resource('pedidos', 'PedidoController');
+Route::resource('ingressos', 'IngressoController');
+Route::resource('pedidocomplemento', 'PedidoComplementoController');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

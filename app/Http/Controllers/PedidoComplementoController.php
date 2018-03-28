@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Evento;
+use App\PedidoComplemento;
 use Illuminate\Http\Request;
 use Validator;
 
-
-class EventoController extends Controller
+class PedidoComplementoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos = Evento::all();
-        return response()->json($eventos);
+        $pedidoComplementos = Lote::all();
+        return response()->json($pedidoComplementos);
     }
 
     /**
@@ -27,7 +26,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -40,22 +39,11 @@ class EventoController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
-            'passaporte' => 'required|boolean',
-            'destaque' => 'required|boolean',
-            'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
-            'exibir_valor' => 'required',
-            'data' => 'required|date',
-            'coordenadas' => 'required'
+            'pedido_id' => 'required|exists:pedidos',
+            'forma_pagamento' => 'required|string|size:100',
+            'cartao_numero' => 'required|string|size:50',
+            'cartao_vencimento' => 'required|date',
+            'parcelas' => 'required|integer',
         ]);
 
         if($validator->fails()) {
@@ -65,11 +53,11 @@ class EventoController extends Controller
             ], 422);
         }
 
-        $evento = new Evento();
-        $evento->fill($data);
-        $evento->save();
+        $pedidoComplemento = new Lote();
+        $pedidoComplemento->fill($data);
+        $pedidoComplemento->save();
 
-        return response()->json($evento, 201);
+        return response()->json($pedidoComplemento, 201);
     }
 
     /**
@@ -80,13 +68,13 @@ class EventoController extends Controller
      */
     public function show(int $id)
     {
-        $evento = Evento::find($id);
-        if(!$evento){
+        $pedidoComplemento = PedidoComplemento::find($id);
+        if(!$pedidoComplemento){
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
-        return response()->json($evento);
+        return response()->json($pedidoComplemento);
     }
 
     /**
@@ -109,42 +97,31 @@ class EventoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $evento = Evento::find($id);
+        $pedidoComplemento = PedidoComplemento::find($id);
         $data = $request->all();
 
-        if(!$evento) {
+        if(!$pedidoComplemento) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        // if(\Auth::user()->id != $evento->id) {
+        // if(\Auth::user()->id != $pedidoComplemento->id) {
         //     return response()->json([
         //         'message' => 'You haven\'t permission to update this record'
         //     ], 401);
         // }
 
-        // if(array_key_exists('email', $data) && $data['email'] == $evento->email) {
+        // if(array_key_exists('email', $data) && $data['email'] == $pedidoComplemento->email) {
         //     unset($data['email']);
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
-            'passaporte' => 'required|boolean',
-            'destaque' => 'required|boolean',
-            'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
-            'exibir_valor' => 'required',
-            'data' => 'required|date',
-            'coordenadas' => 'required'
+            'pedido_id' => 'required|exists:pedidos',
+            'forma_pagamento' => 'required|string|size:100',
+            'cartao_numero' => 'required|string|size:50',
+            'cartao_vencimento' => 'required|date',
+            'parcelas' => 'required|integer',
         ]);
 
         if($validator->fails()) {
@@ -154,10 +131,10 @@ class EventoController extends Controller
             ], 422);
         }
 
-        $evento->fill($data);
-        $evento->save();
+        $pedidoComplemento->fill($data);
+        $pedidoComplemento->save();
 
-        return response()->json($evento);
+        return response()->json($pedidoComplemento);
     }
 
     /**
@@ -168,20 +145,20 @@ class EventoController extends Controller
      */
     public function destroy(int $id)
     {
-        $evento = Evento::find($id);
+        $pedidoComplemento = PedidoComplemento::find($id);
 
-        if(!$evento) {
+        if(!$pedidoComplemento) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        // if(\Auth::user()->id != $evento->id) {
+        // if(\Auth::user()->id != $pedidoComplemento->id) {
         //     return response()->json([
         //         'message' => 'You haven\'t permission to delete this record'
         //     ], 401);
         // }
 
-        $evento->delete();
+        $pedidoComplemento->delete();
     }
 }

@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Usuario;
+use App\Pdv;
 use Illuminate\Http\Request;
 use Validator;
 
-class UsuarioController extends Controller
+class PdvController extends Controller
 {
-    function __construct() {
-        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +15,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $users = Usuario::all();
-        return response()->json($users);
+        $pdvs = Pdv::all();
+        return response()->json($pdvs);
     }
 
     /**
@@ -43,9 +39,13 @@ class UsuarioController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'email' => 'required|email|unique:companies',
-            'senha' => 'required|min:6'
+            'data_entrega' => 'required|size:100',
+            'serial' => 'required|size:100',
+            'marca' => 'required|size:100',
+            'modelo' => 'required|size:100',
+            'taxa' => 'required|numeric',
+            'tipo_pdv' => 'required',
+            'usuario_id' => 'required|exists:usuario'
         ]);
 
         if($validator->fails()) {
@@ -55,39 +55,37 @@ class UsuarioController extends Controller
             ], 422);
         }
 
-        $usuario = new Usuario();
-        $usuario->fill($data);
-        $senha = $request->only(['senha'])['senha'];
-        $usuario->senha = Hash::make($senha);
-        $usuario->save();
+        $pdv = new Lote();
+        $pdv->fill($data);
+        $pdv->save();
 
-        return response()->json($usuario, 201);
+        return response()->json($pdv, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        $usuario = Usuario::find($id);
-        if(!$usuario){
+        $pdv = Lote::find($id);
+        if(!$pdv){
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
-        return response()->json($usuario);
+        return response()->json($pdv);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         //
     }
@@ -96,34 +94,38 @@ class UsuarioController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        $usuario = Usuario::find($id);
+        $ambiente = Pdv::find($id);
         $data = $request->all();
 
-        if(!$usuario) {
+        if(!$ambiente) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        if(\Auth::user()->id != $usuario->id) {
-            return response()->json([
-                'message' => 'You haven\'t permission to update this record'
-            ], 401);
-        }
+        // if(\Auth::user()->id != $ambiente->id) {
+        //     return response()->json([
+        //         'message' => 'You haven\'t permission to update this record'
+        //     ], 401);
+        // }
 
-        if(array_key_exists('email', $data) && $data['email'] == $usuario->email) {
-            unset($data['email']);
-        }
+        // if(array_key_exists('email', $data) && $data['email'] == $ambiente->email) {
+        //     unset($data['email']);
+        // }
 
         $validator = Validator::make($data, [
-            'nome' => 'size:100',
-            'email' => 'email|unique:companies',
-            'senha' => 'min:6'
+            'data_entrega' => 'required|size:100',
+            'serial' => 'required|size:100',
+            'marca' => 'required|size:100',
+            'modelo' => 'required|size:100',
+            'taxa' => 'required|numeric',
+            'tipo_pdv' => 'required',
+            'usuario_id' => 'required|exists:usuario'
         ]);
 
         if($validator->fails()) {
@@ -133,38 +135,34 @@ class UsuarioController extends Controller
             ], 422);
         }
 
-        if(array_key_exists('senha', $data)) {
-            $data['senha'] = Hash::make($data['senha']);
-        }
+        $ambiente->fill($data);
+        $ambiente->save();
 
-        $usuario->fill($data);
-        $usuario->save();
-
-        return response()->json($usuario);
+        return response()->json($ambiente);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        $usuario = Usuario::find($id);
+        $ambiente = Pdv::find($id);
 
-        if(!$usuario) {
+        if(!$ambiente) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        if(\Auth::user()->id != $usuario->id) {
-            return response()->json([
-                'message' => 'You haven\'t permission to delete this record'
-            ], 401);
-        }
+        // if(\Auth::user()->id != $ambiente->id) {
+        //     return response()->json([
+        //         'message' => 'You haven\'t permission to delete this record'
+        //     ], 401);
+        // }
 
-        $usuario->delete();
+        $ambiente->delete();
     }
 }

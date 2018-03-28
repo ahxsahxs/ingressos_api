@@ -9,6 +9,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link rel="stylesheet" href="css/app.css">
 	<script src="js/app.js"></script>
+	<script src="js/index.js"></script>
 </head>
 
 <body>

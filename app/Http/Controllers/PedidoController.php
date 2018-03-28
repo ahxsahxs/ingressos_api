@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Evento;
+use App\Pedido;
 use Illuminate\Http\Request;
 use Validator;
 
-
-class EventoController extends Controller
+class PedidoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos = Evento::all();
-        return response()->json($eventos);
+        $pedidos = Pedido::all();
+        return response()->json($pedidos);
     }
 
     /**
@@ -27,7 +26,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -40,22 +39,14 @@ class EventoController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
-            'passaporte' => 'required|boolean',
-            'destaque' => 'required|boolean',
-            'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
-            'exibir_valor' => 'required',
-            'data' => 'required|date',
-            'coordenadas' => 'required'
+            'valor_bruto' => 'required|numeric',
+            'valor_final' => 'required|numeric',
+            'desconto' => 'required|numeric',
+            'taxa_mp' => 'required|numeric',
+            'data_aprovacao' => 'required|date',
+            'usuario_id' => 'required|exists:usuario',
+            'pdv_id' => 'nullable|exists:pdv',
+            'status' => 'required|boolean',
         ]);
 
         if($validator->fails()) {
@@ -65,11 +56,11 @@ class EventoController extends Controller
             ], 422);
         }
 
-        $evento = new Evento();
-        $evento->fill($data);
-        $evento->save();
+        $pedido = new Lote();
+        $pedido->fill($data);
+        $pedido->save();
 
-        return response()->json($evento, 201);
+        return response()->json($pedido, 201);
     }
 
     /**
@@ -80,13 +71,13 @@ class EventoController extends Controller
      */
     public function show(int $id)
     {
-        $evento = Evento::find($id);
-        if(!$evento){
+        $pedido = Pedido::find($id);
+        if(!$pedido){
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
-        return response()->json($evento);
+        return response()->json($pedido);
     }
 
     /**
@@ -109,42 +100,34 @@ class EventoController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $evento = Evento::find($id);
+        $pedido = Pedido::find($id);
         $data = $request->all();
 
-        if(!$evento) {
+        if(!$pedido) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        // if(\Auth::user()->id != $evento->id) {
+        // if(\Auth::user()->id != $pedido->id) {
         //     return response()->json([
         //         'message' => 'You haven\'t permission to update this record'
         //     ], 401);
         // }
 
-        // if(array_key_exists('email', $data) && $data['email'] == $evento->email) {
+        // if(array_key_exists('email', $data) && $data['email'] == $pedido->email) {
         //     unset($data['email']);
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
-            'passaporte' => 'required|boolean',
-            'destaque' => 'required|boolean',
-            'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
-            'exibir_valor' => 'required',
-            'data' => 'required|date',
-            'coordenadas' => 'required'
+            'valor_bruto' => 'required|numeric',
+            'valor_final' => 'required|numeric',
+            'desconto' => 'required|numeric',
+            'taxa_mp' => 'required|numeric',
+            'data_aprovacao' => 'required|date',
+            'usuario_id' => 'required|exists:usuario',
+            'pdv_id' => 'nullable|exists:pdv',
+            'status' => 'required|boolean',
         ]);
 
         if($validator->fails()) {
@@ -154,10 +137,10 @@ class EventoController extends Controller
             ], 422);
         }
 
-        $evento->fill($data);
-        $evento->save();
+        $pedido->fill($data);
+        $pedido->save();
 
-        return response()->json($evento);
+        return response()->json($pedido);
     }
 
     /**
@@ -168,20 +151,20 @@ class EventoController extends Controller
      */
     public function destroy(int $id)
     {
-        $evento = Evento::find($id);
+        $pedido = Pedido::find($id);
 
-        if(!$evento) {
+        if(!$pedido) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        // if(\Auth::user()->id != $evento->id) {
+        // if(\Auth::user()->id != $pedido->id) {
         //     return response()->json([
         //         'message' => 'You haven\'t permission to delete this record'
         //     ], 401);
         // }
 
-        $evento->delete();
+        $pedido->delete();
     }
 }

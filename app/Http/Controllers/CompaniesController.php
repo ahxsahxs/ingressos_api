@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use Illuminate\Http\Request;
 use Validator;
 use Hash;
-use Illuminate\Http\Request;
-use App\Company;
 
 class CompaniesController extends Controller
 {
@@ -23,7 +23,7 @@ class CompaniesController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'name' => 'required|max:100',
+            'name' => 'required|size:100',
             'email' => 'required|email|unique:companies',
             'password' => 'required|min:6'
         ]);
@@ -77,7 +77,7 @@ class CompaniesController extends Controller
         }
 
         $validator = Validator::make($data, [
-            'name' => 'max:100',
+            'name' => 'size:100',
             'email' => 'email|unique:companies',
             'password' => 'min:6'
         ]);
