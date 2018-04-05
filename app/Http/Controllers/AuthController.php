@@ -12,7 +12,7 @@ use App\Usuario;
 
 class AuthController extends Controller
 {
-    public function autenticate(AuthenticateRequest $request) {
+    public function authenticate(Request $request) {
         $credentials = $request->only(['email', 'password']);
 
         $validator = Validator::make($credentials, [
@@ -31,13 +31,17 @@ class AuthController extends Controller
 
         if(!$usuario) {
             return response()->json([
-                'message' => 'Invalid Credentials'
+                // 'message' => 'Invalid Credentials'
+                'message' => 'Usuário não existe'
             ], 401);
         }
 
+        dd($usuario);
+
         if(!Hash::check($credentials['password'], $usuario->password)) {
             return response()->json([
-                'message' => 'Invalid Credentials'
+                // 'message' => 'Invalid Credentials'
+                'message' => 'Senha Incorreta'
             ], 401);
         }
 

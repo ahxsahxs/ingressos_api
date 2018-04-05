@@ -17,8 +17,9 @@ Route::get('/', function() {
     return response()->json(['message'=>'Ingressos API', 'status'=>'Connected']);
 });
 
-Route::post('auth/login', 'AuthController@autenticate');
+Route::post('auth/login', 'AuthController@authenticate');
 
+Route::resource('usuario', 'UsuarioController');
 Route::resource('eventos', 'EventoController');
 Route::resource('grupoambiente', 'GrupoAmbienteController');
 Route::resource('ambientes', 'AmbienteController');

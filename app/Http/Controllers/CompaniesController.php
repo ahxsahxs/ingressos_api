@@ -23,9 +23,9 @@ class CompaniesController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'name' => 'required|size:100',
+            'name' => 'required|max:100',
             'email' => 'required|email|unique:companies',
-            'password' => 'required|min:6'
+            'password' => 'required|max:6'
         ]);
 
         if($validator->fails()) {

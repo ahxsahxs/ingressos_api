@@ -39,10 +39,10 @@ class PdvController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'data_entrega' => 'required|size:100',
-            'serial' => 'required|size:100',
-            'marca' => 'required|size:100',
-            'modelo' => 'required|size:100',
+            'data_entrega' => 'required|max:100',
+            'serial' => 'required|max:100',
+            'marca' => 'required|max:100',
+            'modelo' => 'required|max:100',
             'taxa' => 'required|numeric',
             'tipo_pdv' => 'required',
             'usuario_id' => 'required|exists:usuario'
@@ -119,10 +119,10 @@ class PdvController extends Controller
         // }
 
         $validator = Validator::make($data, [
-            'data_entrega' => 'required|size:100',
-            'serial' => 'required|size:100',
-            'marca' => 'required|size:100',
-            'modelo' => 'required|size:100',
+            'data_entrega' => 'required|max:100',
+            'serial' => 'required|max:100',
+            'marca' => 'required|max:100',
+            'modelo' => 'required|max:100',
             'taxa' => 'required|numeric',
             'tipo_pdv' => 'required',
             'usuario_id' => 'required|exists:usuario'

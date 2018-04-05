@@ -40,7 +40,7 @@ class GrupoAmbienteController extends Controller
         
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'max_quant' => 'required|numeric',
             'usuario_id' => 'required|exists:usuario'
         ]);
@@ -116,7 +116,7 @@ class GrupoAmbienteController extends Controller
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'max_quant' => 'required|numeric',
         ]);
 

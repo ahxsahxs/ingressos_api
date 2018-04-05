@@ -21,7 +21,7 @@ class JobsController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'title' => 'required|size:255',
+            'title' => 'required|max:255',
             'description' => 'required',
             'local' => 'required',
             'remote' => 'in:yes,no',

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Usuario;
 use Illuminate\Http\Request;
 use Validator;
+use Hash;
 
 class UsuarioController extends Controller
 {
     function __construct() {
-        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
+        // Before implements API Auth
+        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy']]);
+        // After
+        // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
     }
 
     /**
@@ -43,9 +47,10 @@ class UsuarioController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'email' => 'required|email|unique:companies',
-            'senha' => 'required|min:6'
+            'nome' => 'required|max:100',
+            'email' => 'required|email|unique:usuario',
+            'senha' => 'required|max:20|min:3',
+            'cpf' => 'required|string|size:11'
         ]);
 
         if($validator->fails()) {
@@ -159,9 +164,12 @@ class UsuarioController extends Controller
             ], 404);
         }
 
-        if(\Auth::user()->id != $usuario->id) {
+        if($user = \Auth::user()) {
+            $usuario->delete();
+        } else {
             return response()->json([
-                'message' => 'You haven\'t permission to delete this record'
+                // 'message' => 'You haven\'t permission to delete this record'
+                'message' => 'Você precisa estar logado para isso'
             ], 401);
         }
 

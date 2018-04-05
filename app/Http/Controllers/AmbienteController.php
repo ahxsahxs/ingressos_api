@@ -39,11 +39,11 @@ class AmbienteController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'evento_id' => 'required|exists:evento',
             'grupo_ambiente_id' => 'required|exists:grupo_ambiente',
-            'img_topo' => 'required|size:200',
-            'img_rodape' => 'required|size:200',
+            'img_topo' => 'required|max:200',
+            'img_rodape' => 'required|max:200',
         ]);
 
         if($validator->fails()) {
@@ -117,11 +117,11 @@ class AmbienteController extends Controller
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'evento_id' => 'required|exists:evento',
             'grupo_ambiente_id' => 'required|exists:grupo_ambiente',
-            'img_topo' => 'required|size:200',
-            'img_rodape' => 'required|size:200',
+            'img_topo' => 'required|max:200',
+            'img_rodape' => 'required|max:200',
         ]);
 
         if($validator->fails()) {

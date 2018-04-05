@@ -40,10 +40,10 @@ class EventoController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
+            'nome' => 'required|max:100',
+            'cidade' => 'required|max:100',
+            'estado' => 'required|max:10',
+            'pais' => 'required|max:50',
             'usuario_responsavel_id' => 'required|exists:usuario',
             'usuario_inclusao_id' => 'required|exists:usuario',
             'passaporte' => 'required|boolean',
@@ -52,7 +52,7 @@ class EventoController extends Controller
             'img_topo' => 'required',
             'img_anuncio' => 'required',
             'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
+            'descricao' => 'required|max:350',
             'exibir_valor' => 'required',
             'data' => 'required|date',
             'coordenadas' => 'required'
@@ -129,10 +129,10 @@ class EventoController extends Controller
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
-            'cidade' => 'required|size:100',
-            'estado' => 'required|size:10',
-            'pais' => 'required|size:50',
+            'nome' => 'required|max:100',
+            'cidade' => 'required|max:100',
+            'estado' => 'required|max:10',
+            'pais' => 'required|max:50',
             'usuario_responsavel_id' => 'required|exists:usuario',
             'usuario_inclusao_id' => 'required|exists:usuario',
             'passaporte' => 'required|boolean',
@@ -141,7 +141,7 @@ class EventoController extends Controller
             'img_topo' => 'required',
             'img_anuncio' => 'required',
             'img_rodape' => 'nullable',
-            'descricao' => 'required|size:350',
+            'descricao' => 'required|max:350',
             'exibir_valor' => 'required',
             'data' => 'required|date',
             'coordenadas' => 'required'

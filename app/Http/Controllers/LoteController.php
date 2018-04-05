@@ -39,7 +39,7 @@ class LoteController extends Controller
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'quantidade' => 'required|numeric',
             'ordem' => 'required|numeric',
             'status' => 'required|boolean',
@@ -118,7 +118,7 @@ class LoteController extends Controller
         // }
 
         $validator = Validator::make($data, [
-            'nome' => 'required|size:100',
+            'nome' => 'required|max:100',
             'quantidade' => 'required|numeric',
             'ordem' => 'required|numeric',
             'status' => 'required|boolean',
