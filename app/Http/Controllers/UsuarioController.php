@@ -11,7 +11,7 @@ class UsuarioController extends Controller
 {
     function __construct() {
         // Before implements API Auth
-        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy']]);
+        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy', 'update']]);
         // After
         // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
     }
@@ -115,11 +115,11 @@ class UsuarioController extends Controller
             ], 404);
         }
 
-        if(\Auth::user()->id != $usuario->id) {
-            return response()->json([
-                'message' => 'You haven\'t permission to update this record'
-            ], 401);
-        }
+        // if(\Auth::user()->id != $usuario->id) {
+        //     return response()->json([
+        //         'message' => 'You haven\'t permission to update this record'
+        //     ], 401);
+        // }
 
         if(array_key_exists('email', $data) && $data['email'] == $usuario->email) {
             unset($data['email']);
@@ -128,7 +128,7 @@ class UsuarioController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'size:100',
             'email' => 'email|unique:companies',
-            'senha' => 'min:6'
+            'senha' => 'min:3'
         ]);
 
         if($validator->fails()) {
