@@ -9,11 +9,15 @@ use Hash;
 
 class UsuarioController extends Controller
 {
+    private $usuarioLogado = null;
+
     function __construct() {
         // Before implements API Auth
-        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy', 'update']]);
+        // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy', 'update']]);
         // After
-        // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
+        $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
+
+        $this->usuarioLogado = \Auth::user();
     }
 
     /**
@@ -115,18 +119,18 @@ class UsuarioController extends Controller
             ], 404);
         }
 
-        // if(\Auth::user()->id != $usuario->id) {
-        //     return response()->json([
-        //         'message' => 'You haven\'t permission to update this record'
-        //     ], 401);
-        // }
+        if(!$this->usuarioLogado || $this->usuarioLogado->id != $usuario->id) {
+            return response()->json([
+                'message' => 'You haven\'t permission to update this record'
+            ], 401);
+        }
 
         if(array_key_exists('email', $data) && $data['email'] == $usuario->email) {
             unset($data['email']);
         }
 
         $validator = Validator::make($data, [
-            'nome' => 'size:100',
+            'nome' => 'min:3|max:100',
             'email' => 'email|unique:companies',
             'senha' => 'min:3'
         ]);
@@ -164,15 +168,13 @@ class UsuarioController extends Controller
             ], 404);
         }
 
-        if($user = \Auth::user()) {
+        if(!$this->usuarioLogado || $this->usuarioLogado->id != $usuario->id) {
             $usuario->delete();
         } else {
             return response()->json([
                 // 'message' => 'You haven\'t permission to delete this record'
-                'message' => 'Você precisa estar logado para isso'
+                'message' => 'Você precisa estar logado em sua conta para removê-la'
             ], 401);
         }
-
-        $usuario->delete();
     }
 }

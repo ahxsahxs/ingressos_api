@@ -43,30 +43,28 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $credentials['senha'] = $credentials['password'];
-        unset($credentials['password']);
-
-        // if(!Hash::check($credentials['password'], $usuario->senha)) {
-        //     return response()->json([
-        //         // 'message' => 'Invalid Credentials'
-        //         'message' => 'Senha Incorreta'
-        //     ], 401);
-        // }
-
-        try {
-            if(!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['message' => 'Usuário não encontrado'], 401);
-            }
-        } catch(JWTException $e) {
-            return response()->json(['message' => 'Não foi possível realizar a autenticação']);
+        if(!Hash::check($credentials['password'], $usuario->senha)) {
+            return response()->json([
+                // 'message' => 'Invalid Credentials'
+                'message' => 'Senha Incorreta'
+            ], 401);
         }
 
-        return response()->json(compact('token'));
 
-        // return response()->json([
-        //     'access_token' => $token,
-        //     'token_type' => 'bearer',
-        //     'expires_in' => $this->auth->decode($token)->get('exp')
-        // ]);
+        // try {
+        //     if(!$token = JWTAuth::attempt($credentials)) {
+        //         return response()->json(['message' => 'Não há usu'], 401);
+        //     }
+        // } catch(JWTException $e) {
+        //     return response()->json(['message' => 'Não foi possível realizar a autenticação']);
+        // }
+
+        $token = JWTAuth::fromUser($usuario);
+
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer'
+        ]);
     }
 }
