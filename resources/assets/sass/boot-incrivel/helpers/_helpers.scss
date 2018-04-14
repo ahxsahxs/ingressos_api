@@ -1,0 +1,37 @@
+@for $i from 0 to 6 {
+  $size: $i * 10;
+  .p-#{$size} {
+    padding: #{$size}px !important;
+  }
+  .p-t-#{$size} {
+    padding-top: #{$size}px !important;
+  }
+  .p-r-#{$size} {
+    padding-right: #{$size}px !important;
+  }
+  .p-b-#{$size} {
+    padding-bottom: #{$size}px !important;
+  }
+  .p-l-#{$size} {
+    padding-left: #{$size}px !important;
+  }
+  .m-#{$size} {
+    margin: #{$size}px !important;
+  }
+  .m-t-#{$size} {
+    margin-top: #{$size}px !important;
+  }
+  .m-r-#{$size} {
+    margin-right: #{$size}px !important;
+  }
+  .m-b-#{$size} {
+    margin-bottom: #{$size}px !important;
+  }
+  .m-l-#{$size} {
+    margin-left: #{$size}px !important;
+  }
+}
+
+.no-wrap {
+  white-space: nowrap;
+}

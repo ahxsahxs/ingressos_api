@@ -22,5 +22,10 @@ let webpack = require('webpack');
         })
      ]
  })
+ .autoload({ jquery: ['$', 'window.jQuery', 'jQuery'] })
+//  .copy('node_modules/owl.carousel/dist/owl.carousel.js', 'public/js')
  .js('resources/assets/js/app.js', 'public/js/app.js')
- .sass('resources/assets/sass/app.scss', 'public/css/app.css');
+ .js('resources/assets/js/index.js', 'public/js/index.js')
+ .sass('resources/assets/sass/app.scss', 'public/css/app.css')
+ .sass('resources/assets/sass/custom.scss', 'public/css/custom.css')
+ .sourceMaps();

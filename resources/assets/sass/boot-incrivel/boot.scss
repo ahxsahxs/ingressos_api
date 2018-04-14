@@ -1,0 +1,195 @@
+/*!
+*
+* Todos os direitos reservados
+* agenciaincrivel.com.br
+* @author Hebert Bezerra
+* @since 09/03/2017
+*
+*/
+// Importa bibliotecas necessarias
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../font-awesome/scss/font-awesome";
+@import "helpers/responsivo";
+@import "helpers/preboot";
+@import "helpers/select";
+
+// Cores
+$cor-primaria: #0074b2;
+$cor-primaria-link: #FFF;
+
+$cor-secundaria: #0074b2;
+$cor-secundaria-link: #FFF;
+
+body {
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: optimizeLegibility !important;
+  font-family: 'Open Sans', sans-serif;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.texto-cor-primaria {
+  color: $cor-primaria !important;
+}
+
+.texto-cor-secundaria {
+  color: $cor-secundaria !important;
+}
+
+.link-cor-primaria {
+  color: $cor-primaria-link !important;
+}
+
+.link-cor-secundaria {
+  color: $cor-secundaria-link !important;
+}
+
+.transicao-150 {
+  @include transition(all 150ms ease-out 150ms);
+}
+
+.transicao-200 {
+  @include transition(all 200ms ease-out 200ms);
+}
+
+.transicao-250 {
+  @include transition(all 250ms ease-out 250ms);
+}
+
+.font-xss {
+  font-size: 0.8em;
+}
+
+.font-xs {
+  font-size: .9em;
+}
+
+.font-0 {
+  font-size: 1em;
+}
+
+.font-md {
+  font-size: 1.4em;
+}
+
+.font-mdd {
+  font-size: 1.7em;
+}
+
+.font-lg {
+  font-size: 2em;
+}
+
+.font-lgg {
+  font-size: 2.5em;
+}
+
+.font-xlg {
+  font-size: 3.5em;
+}
+
+.font-xxlg {
+  font-size: 7.5em;
+}
+
+.font-primaria {
+  font-family: 'Oswald', sans-serif;
+}
+
+.font-weight-light {
+  font-weight: 100;
+}
+
+.font-weight-b {
+  font-weight: 600 !important;
+}
+
+.font-tahoma {
+  font-family: 'Tahoma', sans-serif;
+}
+
+.hide {
+  display: none;
+}
+
+.bg-gradient-p-s {
+  @include gradient-directional($cor-primaria, $cor-secundaria 100%, to right);
+}
+
+.lista-horizontal {
+  li {
+    margin-right: 15px;
+    float: left;
+
+    @include responsivo(tablet-wide) {
+      margin-right: 5px;
+    }
+  }
+}
+
+input {
+  border-radius: 0 !important;
+}
+
+.btn {
+  @extend .transicao-250;
+  box-shadow: none !important;
+  border-radius: 0px;
+  font-weight: 600;
+  &.btn-wide {
+    @extend .w-100;
+  }
+  &.btn-wide-in {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+  &.btn-rounded {
+    border-radius: 50px !important;
+  }
+  &.btn-circle {
+    border-radius: 50% !important;
+  }
+  &.btn-letter-spacing {
+    letter-spacing: 1px;
+    font-size: .9em;
+  }
+  &.btn-branco {
+    @include button-variant(#000, #FFF, #FFF);
+  }
+  &.btn-dark {
+    @include button-variant(#000, transparent, #000);
+  }
+  &.btn-gradient-cor-primaria {
+    @include button-variant($cor-primaria-link, $cor-primaria, $cor-primaria);
+    @include gradient-directional($cor-primaria, $cor-secundaria 100%, to right);
+    &:hover {
+      @include gradient-directional($cor-primaria, $cor-secundaria 100%, to left);
+    }
+  }
+  &.btn-gradient-black {
+    @include button-variant(#FFF, #1f1f1f, #1f1f1f);
+    @include gradient-directional(#1f1f1f, #404040 100%, to right);
+    box-shadow: none !important;
+    border-color: #333;
+    &:hover {
+      @include gradient-directional(#1f1f1f, #404040 100%, to left);
+      border-color: #333;
+    }
+  }
+  &.btn-cor-primaria {
+    @include button-variant($cor-primaria-link, $cor-primaria, $cor-primaria);
+  }
+  &.btn-outline-cor-primaria {
+    @include button-outline-variant($cor-primaria, $cor-primaria-link);
+  }
+  &.btn-cor-secundaria {
+    @include button-variant($cor-secundaria-link, $cor-secundaria, $cor-secundaria);
+  }
+  &.btn-outline-cor-secundaria {
+    @include button-outline-variant($cor-secundaria, $cor-secundaria-link);
+  }
+}
