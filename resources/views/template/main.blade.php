@@ -110,7 +110,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form class="form-login font-xs">
+                    <form class="form-login font-xs" id="form-login">
                         <div class="row">
                             <div class="col-12 text-center">
                                 <a href="#" class="btn btn-primary btn-facebook text-uppercase w-100 my-2">Conectar com o Facebook <i class="fa fa-facebook"></i></a>
@@ -132,7 +132,7 @@
                                 <a href="#">Esqueci minha senha</a>
                             </div>
                             <div class="col-12 text-center">
-                                <button type="button" class="btn btn-success w-100 text-uppercase my-3 py-2">Entrar</button>
+                                <button type="submit" class="btn btn-success w-100 text-uppercase my-3 py-2">Entrar</button>
                                 <p class="divider mb-1">ou</p>
                                 <a href="#" class="text-dark font-weight-b">Faça seu cadastro</a>
                             </div>

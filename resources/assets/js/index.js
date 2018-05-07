@@ -30,4 +30,19 @@ jQuery(function($){
     //     items: 1,
     //     nav: false,
     // });
+
+    $("#form-login").submit(function(evt) {
+        evt.preventDefault();
+        let email = $(this).find('input[name="email"]').val();
+        let password = $(this).find('input[name="senha"]').val();
+
+        let params = {
+            email: email,
+            password: password
+        };
+
+        $.post('api/auth/login', params, function(response) {
+            console.log(response);
+        });
+    });
 });
