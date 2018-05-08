@@ -18,56 +18,7 @@ Início
 			<h2>Eventos <span>destaques</span></h2>
 		</div>
 		<div class="eventos-lista py-3">
-			<div class="row">
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-				<div class="col-md-3 col-sm-3 col-12">
-					<a href="#" class="evento-item scroll-effect" style="background-image: url(images/pictures/evento.jpg)">
-						<div class="evento-data">10/02</div>
-						<h1>Camarote Galo</h1>
-					</a>
-				</div>
-			</div>
+			<div class="row" id="lista-destaques"></div>
 		</div>
 	</div>
 </section>
@@ -133,4 +84,6 @@ Início
 		© Desenvolvido por Agência Incrível
 	</div>
 </footer>
+
+<script src="js/home/destaques.js"></script>
 @stop

@@ -19,7 +19,7 @@ class UsuarioController extends Controller
 
         $this->usuarioLogado = \Auth::user();
     }
-
+    
     /**
      * Display a listing of the resource.
      *

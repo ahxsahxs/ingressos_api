@@ -184,4 +184,15 @@ class EventoController extends Controller
 
         $evento->delete();
     }
+
+    public function destaques(int $n) {
+        $eventos = Evento::where('ativo', 1)
+            ->orderBy('data')
+            ->take($n)
+            ->get();
+
+        return response()->json([
+            'destaques' => $eventos
+        ]);
+    }
 }

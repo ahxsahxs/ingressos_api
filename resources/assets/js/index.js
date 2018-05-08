@@ -41,8 +41,12 @@ jQuery(function($){
             password: password
         };
 
-        $.post('api/auth/login', params, function(response) {
-            console.log(response);
-        });
+        $.post('api/auth/login', params)
+            .done(response => {
+                console.log(response);
+            })
+            .fail((response,status) => {
+                $('#loginErrorAlert').addClass('show');
+            });
     });
 });
