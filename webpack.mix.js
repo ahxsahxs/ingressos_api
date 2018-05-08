@@ -24,6 +24,7 @@ let webpack = require('webpack');
  })
  .autoload({ jquery: ['$', 'window.jQuery', 'jQuery'] })
 //  .copy('node_modules/owl.carousel/dist/owl.carousel.js', 'public/js')
+ .copy('resources/assets/js/home', 'public/js/home')
  .js('resources/assets/js/app.js', 'public/js/app.js')
  .js('resources/assets/js/index.js', 'public/js/index.js')
  .sass('resources/assets/sass/app.scss', 'public/css/app.css')

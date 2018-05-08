@@ -133,6 +133,12 @@
                             </div>
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-success w-100 text-uppercase my-3 py-2">Entrar</button>
+                                <div class="alert alert-danger alert-dismissible fade text-left" role="alert" id="loginErrorAlert">
+                                    <strong>Seu usuário não foi encontrado</strong>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
                                 <p class="divider mb-1">ou</p>
                                 <a href="#" class="text-dark font-weight-b">Faça seu cadastro</a>
                             </div>
