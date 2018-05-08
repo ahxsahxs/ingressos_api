@@ -40,20 +40,20 @@ class AuthController extends Controller
             return response()->json([
                 // 'message' => 'Invalid Credentials'
                 'message' => 'Usuário não existe'
-            ], 401);
+            ], 401)->header('Access-Control-Allow-Origin', '*');
         }
 
         if(!Hash::check($credentials['password'], $usuario->senha)) {
             return response()->json([
                 // 'message' => 'Invalid Credentials'
                 'message' => 'Senha Incorreta'
-            ], 401);
+            ], 401)->header('Access-Control-Allow-Origin', '*');
         }
 
 
         // try {
         //     if(!$token = JWTAuth::attempt($credentials)) {
-        //         return response()->json(['message' => 'Não há usu'], 401);
+        //         return response()->json(['message' => 'Não há usu'], 401)->header('Access-Control-Allow-Origin', '*');
         //     }
         // } catch(JWTException $e) {
         //     return response()->json(['message' => 'Não foi possível realizar a autenticação']);
@@ -65,6 +65,6 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer'
-        ]);
+        ])->header('Access-Control-Allow-Origin', '*');
     }
 }
