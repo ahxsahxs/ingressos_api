@@ -9,6 +9,10 @@ use Validator;
 
 class EventoController extends Controller
 {
+    public function __construct() {
+        $this->middleware(\App\Http\Middleware\Cors::class);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -39,13 +43,20 @@ class EventoController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $booleans = ['ativo', 'passaporte', 'destaque'];
+        foreach($booleans as $var) {
+            if(isset($data[$var])) {
+                if($data[$var] == 'true') $data[$var] = true;
+                else if($data[$var] == 'false') $data[$var] = false;
+            }
+        }
         $validator = Validator::make($data, [
             'nome' => 'required|max:100',
             'cidade' => 'required|max:100',
-            'estado' => 'required|max:10',
+            'estado' => 'required|max:25',
             'pais' => 'required|max:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
+            'usuario_responsavel_id' => 'required|exists:usuario,id',
+            'usuario_inclusao_id' => 'required|exists:usuario,id',
             'passaporte' => 'required|boolean',
             'destaque' => 'required|boolean',
             'ativo' => 'required|boolean',
@@ -55,7 +66,8 @@ class EventoController extends Controller
             'descricao' => 'required|max:350',
             'exibir_valor' => 'required',
             'data' => 'required|date',
-            'coordenadas' => 'required'
+            'coordenadas' => 'required',
+            'endereco' => 'required'
         ]);
 
         if($validator->fails()) {
@@ -111,6 +123,15 @@ class EventoController extends Controller
     {
         $evento = Evento::find($id);
         $data = $request->all();
+    
+        $booleans = ['ativo', 'passaporte', 'destaque'];
+        foreach($booleans as $var) {
+            if(isset($data[$var])) {
+                if($data[$var] == 'true') $data[$var] = true;
+                else if($data[$var] == 'false') $data[$var] = false;
+            }
+        }
+
 
         if(!$evento) {
             return response()->json([
@@ -131,7 +152,7 @@ class EventoController extends Controller
         $validator = Validator::make($data, [
             'nome' => 'required|max:100',
             'cidade' => 'required|max:100',
-            'estado' => 'required|max:10',
+            'estado' => 'required|max:25',
             'pais' => 'required|max:50',
             'usuario_responsavel_id' => 'required|exists:usuario',
             'usuario_inclusao_id' => 'required|exists:usuario',

@@ -16,6 +16,7 @@ class UsuarioController extends Controller
         // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy', 'update']]);
         // After
         $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
+        $this->middleware(\App\Http\Middleware\Cors::class);
 
         $this->usuarioLogado = \Auth::user();
     }
