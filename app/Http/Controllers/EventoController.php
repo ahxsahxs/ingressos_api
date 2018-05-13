@@ -75,10 +75,12 @@ class EventoController extends Controller
 
         if($request->hasFile('img_topo')) {
             $path = $request->file('img_topo')->store('public/eventos');
+            $path = str_replace('/public', '', $path);
             $data['img_topo'] = $path;
         }
         if($request->hasFile('img_anuncio')) {
             $path = $request->file('img_anuncio')->store('public/eventos');
+            $path = str_replace('/public', '', $path);
             $data['img_anuncio'] = $path;
         }
 
