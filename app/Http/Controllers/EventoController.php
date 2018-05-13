@@ -43,6 +43,7 @@ class EventoController extends Controller
     {
         $data = $request->except(['img_topo', 'img_anuncio']);
         $booleans = ['ativo', 'passaporte', 'destaque', 'exibir_valor'];
+
         foreach($booleans as $var) {
             if(isset($data[$var])) {
                 if($data[$var] == 'true') $data[$var] = true;
