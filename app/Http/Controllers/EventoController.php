@@ -6,7 +6,6 @@ use App\Evento;
 use Illuminate\Http\Request;
 use Validator;
 
-
 class EventoController extends Controller
 {
     public function __construct() {
@@ -42,8 +41,8 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $booleans = ['ativo', 'passaporte', 'destaque'];
+        $data = $request->except(['img_topo', 'img_anuncio']);
+        $booleans = ['ativo', 'passaporte', 'destaque', 'exibir_valor'];
         foreach($booleans as $var) {
             if(isset($data[$var])) {
                 if($data[$var] == 'true') $data[$var] = true;
@@ -60,9 +59,6 @@ class EventoController extends Controller
             'passaporte' => 'required|boolean',
             'destaque' => 'required|boolean',
             'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
             'descricao' => 'required|max:350',
             'exibir_valor' => 'required',
             'data' => 'required|date',
@@ -75,6 +71,15 @@ class EventoController extends Controller
                 'message' => 'Validation Failed',
                 'errors' => $validator->errors()->all()
             ], 422);
+        }
+
+        if($request->hasFile('img_topo')) {
+            $path = $request->file('img_topo')->store('public/eventos');
+            $data['img_topo'] = $path;
+        }
+        if($request->hasFile('img_anuncio')) {
+            $path = $request->file('img_anuncio')->store('public/eventos');
+            $data['img_anuncio'] = $path;
         }
 
         $evento = new Evento();
