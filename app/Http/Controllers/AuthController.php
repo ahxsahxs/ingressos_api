@@ -13,12 +13,6 @@ use App\Usuario;
 
 class AuthController extends Controller
 {
-    // private $auth;
-
-    // public function __construct(JWTAuth $auth) {
-    //     $this->auth = $auth;
-    // }
-
     public function authenticate(Request $request) {
         $credentials = $request->only(['email', 'password']);
 
@@ -50,21 +44,30 @@ class AuthController extends Controller
             ], 401);
         }
 
-
-        // try {
-        //     if(!$token = JWTAuth::attempt($credentials)) {
-        //         return response()->json(['message' => 'Não há usu'], 401);
-        //     }
-        // } catch(JWTException $e) {
-        //     return response()->json(['message' => 'Não foi possível realizar a autenticação']);
-        // }
-
         $token = JWTAuth::fromUser($usuario);
-
 
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer'
         ]);
+    }
+
+    // somewhere in your controller
+    public function getAuthenticatedUser(Request $request)
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent'], $e->getStatusCode());
+        }
+
+        // the token is valid and we have found the user via the sub claim
+        return response()->json(compact('user'));
     }
 }

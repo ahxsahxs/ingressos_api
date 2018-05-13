@@ -18,6 +18,7 @@ Route::get('/', function() {
 });
 
 Route::post('auth/login', 'AuthController@authenticate');
+Route::post('auth/user', 'AuthController@getAuthenticatedUser');
 
 Route::resource('usuario', 'UsuarioController');
 Route::resource('eventos', 'EventoController');

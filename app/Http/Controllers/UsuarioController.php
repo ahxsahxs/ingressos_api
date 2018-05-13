@@ -12,9 +12,6 @@ class UsuarioController extends Controller
     private $usuarioLogado = null;
 
     function __construct() {
-        // Before implements API Auth
-        // $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store', 'destroy', 'update']]);
-        // After
         $this->middleware('jwt.auth', ['except' => ['index', 'show', 'store']]);
         $this->middleware(\App\Http\Middleware\Cors::class);
 
