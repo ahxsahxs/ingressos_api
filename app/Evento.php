@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evento extends Model
 {
-    protected $fillable = ['nome', 'cidade', 'estado', 'pais', 'usuario_responsavel_id', 'usuario_inclusao_id', 'passaporte', 'destaque', 'ativo', 'img_topo', 'img_anuncio', 'img_rodape', 'descricao', 'exibir_valor', 'data', 'coordenadas'];
+    protected $fillable = ['nome', 'cidade', 'estado', 'pais', 'usuario_responsavel_id', 'usuario_inclusao_id', 'passaporte', 'destaque', 'ativo', 'img_topo', 'img_anuncio', 'img_rodape', 'descricao', 'exibir_valor', 'data', 'coordenadas', 'endereco'];
 
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
