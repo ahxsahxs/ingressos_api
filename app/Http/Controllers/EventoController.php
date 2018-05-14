@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use App\Evento;
 use Illuminate\Http\Request;
 use Validator;
+use JWTAuth;
 
 class EventoController extends Controller
 {
+    private $usuarioLogado = null;
+
     public function __construct() {
+        // $this->middleware('jwt.auth', ['except' => ['show']]);
         $this->middleware(\App\Http\Middleware\Cors::class);
+
+        $this->usuarioLogado = \Auth::user();
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +25,13 @@ class EventoController extends Controller
      */
     public function index()
     {
+        // if(!$this->usuarioLogado) {
+        //     return response()->json([
+        //         'message' => 'Você precisa estar logado para ver seus eventos'
+        //     ], 401);
+        // }
+
+        // $eventos = Evento::where('usuario_inclusao_id', $this->usuarioLogado->id);
         $eventos = Evento::all();
         return response()->json($eventos);
     }
@@ -30,7 +43,7 @@ class EventoController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -131,7 +144,7 @@ class EventoController extends Controller
     {
         $evento = Evento::find($id);
         $data = $request->all();
-    
+
         $booleans = ['ativo', 'passaporte', 'destaque'];
         foreach($booleans as $var) {
             if(isset($data[$var])) {
