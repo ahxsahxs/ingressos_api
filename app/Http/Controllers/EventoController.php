@@ -73,7 +73,7 @@ class EventoController extends Controller
             'passaporte' => 'required|boolean',
             'destaque' => 'required|boolean',
             'ativo' => 'required|boolean',
-            'descricao' => 'required|max:350',
+            'descricao' => 'required|max:1000',
             'exibir_valor' => 'required',
             'data' => 'required|date',
             'coordenadas' => 'required',
