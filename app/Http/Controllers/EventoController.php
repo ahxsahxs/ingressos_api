@@ -12,7 +12,7 @@ class EventoController extends Controller
     private $usuarioLogado = null;
 
     public function __construct() {
-        // $this->middleware('jwt.auth', ['except' => ['show']]);
+        $this->middleware('jwt.auth', ['except' => ['show']]);
         $this->middleware(\App\Http\Middleware\Cors::class);
 
         $this->usuarioLogado = \Auth::user();
@@ -89,13 +89,15 @@ class EventoController extends Controller
 
         if($request->hasFile('img_topo')) {
             $path = $request->file('img_topo')->store('public/eventos');
-            $path = str_replace('/public', '', $path);
             $data['img_topo'] = $path;
         }
         if($request->hasFile('img_anuncio')) {
             $path = $request->file('img_anuncio')->store('public/eventos');
-            $path = str_replace('/public', '', $path);
             $data['img_anuncio'] = $path;
+        }
+        if($request->hasFile('img_rodape')) {
+            $path = $request->file('img_rodape')->store('public/eventos');
+            $data['img_rodape'] = $path;
         }
 
         $evento = new Evento();
@@ -143,50 +145,47 @@ class EventoController extends Controller
     public function update(Request $request, int $id)
     {
         $evento = Evento::find($id);
-        $data = $request->all();
-
-        $booleans = ['ativo', 'passaporte', 'destaque'];
-        foreach($booleans as $var) {
-            if(isset($data[$var])) {
-                if($data[$var] == 'true') $data[$var] = true;
-                else if($data[$var] == 'false') $data[$var] = false;
-            }
-        }
-
-
         if(!$evento) {
             return response()->json([
                 'message' => 'Record not Found'
             ], 404);
         }
 
-        // if(\Auth::user()->id != $evento->id) {
-        //     return response()->json([
-        //         'message' => 'You haven\'t permission to update this record'
-        //     ], 401);
-        // }
+        if(!Auth::user() || 
+            !(
+                Auth::user()->id == $evento->usuario_responsavel_id ||
+                Auth::user()->id == $evento->usuario_inclusao_id
+            )
+        ) {
+            return response()->json([
+                'message' => 'Apenas o usuário inclusor ou o responsável podem editar os eventos'
+            ], 401);
+        }
 
-        // if(array_key_exists('email', $data) && $data['email'] == $evento->email) {
-        //     unset($data['email']);
-        // }
+        $data = $request->except(['img_topo', 'img_anuncio']);
+        $booleans = ['ativo', 'passaporte', 'destaque', 'exibir_valor'];
 
+        foreach($booleans as $var) {
+            if(isset($data[$var])) {
+                if($data[$var] == 'true') $data[$var] = true;
+                else if($data[$var] == 'false') $data[$var] = false;
+            }
+        }
         $validator = Validator::make($data, [
             'nome' => 'required|max:100',
             'cidade' => 'required|max:100',
             'estado' => 'required|max:25',
             'pais' => 'required|max:50',
-            'usuario_responsavel_id' => 'required|exists:usuario',
-            'usuario_inclusao_id' => 'required|exists:usuario',
+            'usuario_responsavel_id' => 'required|exists:usuario,id',
+            'usuario_inclusao_id' => 'required|exists:usuario,id',
             'passaporte' => 'required|boolean',
             'destaque' => 'required|boolean',
             'ativo' => 'required|boolean',
-            'img_topo' => 'required',
-            'img_anuncio' => 'required',
-            'img_rodape' => 'nullable',
-            'descricao' => 'required|max:350',
+            'descricao' => 'required|max:1000',
             'exibir_valor' => 'required',
             'data' => 'required|date',
-            'coordenadas' => 'required'
+            'coordenadas' => 'required',
+            'endereco' => 'required'
         ]);
 
         if($validator->fails()) {
@@ -196,10 +195,24 @@ class EventoController extends Controller
             ], 422);
         }
 
+        if($request->hasFile('img_topo')) {
+            $path = $request->file('img_topo')->store('public/eventos');
+            $data['img_topo'] = $path;
+        }
+        if($request->hasFile('img_anuncio')) {
+            $path = $request->file('img_anuncio')->store('public/eventos');
+            $data['img_anuncio'] = $path;
+        }
+        if($request->hasFile('img_rodape')) {
+            $path = $request->file('img_rodape')->store('public/eventos');
+            $data['img_rodape'] = $path;
+        }
+
+        $evento = Evento::find($id);
         $evento->fill($data);
         $evento->save();
 
-        return response()->json($evento);
+        return response()->json($evento, 201);
     }
 
     /**
