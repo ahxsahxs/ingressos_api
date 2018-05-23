@@ -88,17 +88,17 @@ class EventoController extends Controller
 
         if($request->hasFile('img_topo')) {
             $path = $request->file('img_topo')->store('public/eventos');
-            $path = str_replace('public/', 'storage/');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_topo'] = $path;
         }
         if($request->hasFile('img_anuncio')) {
             $path = $request->file('img_anuncio')->store('public/eventos');
-            $path = str_replace('public/', 'storage/');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_anuncio'] = $path;
         }
         if($request->hasFile('img_rodape')) {
             $path = $request->file('img_rodape')->store('public/eventos');
-            $path = str_replace('public/', 'storage/');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_rodape'] = $path;
         }
 
@@ -199,14 +199,17 @@ class EventoController extends Controller
 
         if($request->hasFile('img_topo')) {
             $path = $request->file('img_topo')->store('public/eventos');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_topo'] = $path;
         }
         if($request->hasFile('img_anuncio')) {
             $path = $request->file('img_anuncio')->store('public/eventos');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_anuncio'] = $path;
         }
         if($request->hasFile('img_rodape')) {
             $path = $request->file('img_rodape')->store('public/eventos');
+            $path = str_replace('public/', 'storage/', $path);
             $data['img_rodape'] = $path;
         }
 
