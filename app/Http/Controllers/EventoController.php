@@ -153,10 +153,10 @@ class EventoController extends Controller
             ], 404);
         }
 
-        if(!Auth::user() || 
+        if(!\Auth::user() || 
             !(
-                Auth::user()->id == $evento->usuario_responsavel_id ||
-                Auth::user()->id == $evento->usuario_inclusao_id
+                \Auth::user()->id == $evento->usuario_responsavel_id ||
+                \Auth::user()->id == $evento->usuario_inclusao_id
             )
         ) {
             return response()->json([
