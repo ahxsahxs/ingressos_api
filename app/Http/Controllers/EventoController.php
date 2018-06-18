@@ -53,7 +53,7 @@ class EventoController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except(['img_topo', 'img_anuncio']);
+        $data = $request->except(['img_topo', 'img_anuncio', 'img_rodape']);
         $booleans = ['ativo', 'passaporte', 'destaque', 'exibir_valor'];
 
         foreach($booleans as $var) {
@@ -85,7 +85,7 @@ class EventoController extends Controller
                 'errors' => $validator->errors()->all()
             ], 422);
         }
-
+        
         if($request->hasFile('img_topo')) {
             $path = $request->file('img_topo')->store('public/eventos');
             $path = str_replace('public/', 'storage/', $path);
@@ -164,7 +164,7 @@ class EventoController extends Controller
             ], 401);
         }
 
-        $data = $request->except(['img_topo', 'img_anuncio']);
+        $data = $request->except(['img_topo', 'img_rodape', 'img_anuncio']);
         $booleans = ['ativo', 'passaporte', 'destaque', 'exibir_valor'];
 
         foreach($booleans as $var) {

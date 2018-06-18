@@ -13,9 +13,15 @@ class AmbienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ambientes = Ambiente::all();
+        if(!empty($request->filters)) {
+            if(!empty($request->filters['evento'])) {
+                $ambientes = Ambiente::where('evento_id', $request->filters['evento']);
+            }
+        } else {
+            $ambientes = Ambiente::all();
+        }
         return response()->json($ambientes);
     }
 
